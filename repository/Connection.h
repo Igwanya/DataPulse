@@ -16,6 +16,12 @@ class Connection
 public:
     Connection();
 
+    ~Connection();
+
+    void intiialise_tables(boost::mysql::tcp_ssl_connection &conn);
+
+    void drop_tests_tables();
+
 private:
     std::string _username = "root";
     std::string _password = "Igwanya32*";
