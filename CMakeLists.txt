@@ -1,38 +1,17 @@
-cmake_minimum_required(VERSION 3.23.2)
+cmake_minimum_required(VERSION 3.22.1)
 
-project(boost_mysql_data_integration LANGUAGES CXX)
+project(DataPulse LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+add_subdirectory(src)
+add_subdirectory(docs)
+add_subdirectory(tests)
 
-set(Boost_USE_STATIC_LIBS        ON)  # only find static libs
-set(Boost_USE_DEBUG_LIBS        OFF)  # ignore debug libs and
-set(Boost_USE_RELEASE_LIBS       ON)  # only find release libs
-set(Boost_USE_MULTITHREADED      ON)
-set(Boost_USE_STATIC_RUNTIME    OFF)
+add_executable(DataPulse src/main.cpp)
 
-find_package(Boost 1.80.0 REQUIRED COMPONENTS headers date_time filesystem system log)
-
-if(Boost_FOUND)
-  include_directories(${Boost_INCLUDE_DIRS})
-endif()
-
-find_package(Threads REQUIRED)
-
-find_package(OpenSSL REQUIRED)
-
-# Database integration
-add_subdirectory(repository)
-
-include_directories(repository/)
-
-add_subdirectory(unittests)
-
-add_executable(boost_mysql_data_integration main.cpp)
-
-target_link_libraries(boost_mysql_data_integration PRIVATE
+target_link_libraries(DataPulse PRIVATE
     Boost::headers Threads::Threads OpenSSL::Crypto OpenSSL::SSL
     ${Boost_LIBRARIES}
-    repository
 )
-
