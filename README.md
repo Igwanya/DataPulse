@@ -1,6 +1,8 @@
 
 Database Integration c++
 
+[![CMake on multiple platforms](https://github.com/Igwanya/DataPulse/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/Igwanya/DataPulse/actions/workflows/cmake-multi-platform.yml)
+
 ## [Boost C++ libraries](https://www.boost.org/doc/libs/1_82_0/libs/mysql/doc/html/index.html) 
 The codebase facilitates establishing a secure and stable connection to a MySQL database.
 Boost's Asio library is utilized to handle asynchronous network communication.
