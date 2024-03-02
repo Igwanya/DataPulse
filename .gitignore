@@ -74,3 +74,6 @@ CMakeLists.txt.user*
 build
 bak
 todo.txt
+out
+CmakeSettings.json
+.vs
