@@ -5,9 +5,9 @@ set(DOXYGEN_DISABLE_INDEX NO)
 set(DOXYGEN_FULL_SIDEBAR NO)
 set(DOXYGEN_ HTML_EXTRA_STYLESHEET ${CMAKE_CURRENT_SOURCE_DIR}/doxygen-awesome.css)
 set(DOXYGEN_HTML_COLORSTYLE LIGHT) # required with Doxygen >= 1.9.5
-find_package(Doxygen
-             REQUIRED dot
-             OPTIONAL_COMPONENTS mscgen dia)
+
+find_package(Doxygen OPTIONAL_COMPONENTS dot mscgen dia)
+
 if(NOT DOXYGEN_FOUND)
   message(FATAL_ERROR "Doxygen is needed to build the documentation. Please install it on your system")
   else()
