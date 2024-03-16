@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.7...3.30)
+cmake_minimum_required(VERSION 3.21.3...3.30)
+message(STATUS "cmake version: ${CMAKE_VERSION}")
 if(${CMAKE_VERSION} VERSION_LESS 3.12)
     cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
 endif()
@@ -35,25 +36,27 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
 configure_file(config.h.in config.h @ONLY)
 
 set(BOOST_ROOT "C:/Program Files/boost/boost_1_84_0")
-set(Boost_USE_STATIC_LIBS        ON)  # only find static libs
-set(Boost_USE_DEBUG_LIBS        OFF)  # ignore debug libs and
+set(BOOST_INCLUDEDIR "C:/Program Files/boost/boost_1_84_0/include")
+set(BOOST_LIBRARYDIR "C:/Program Files/boost/boost_1_84_0/lib")
+set(Boost_USE_DEBUG_LIBS        ON)  # ignore debug libs and
 set(Boost_USE_RELEASE_LIBS       ON)  # only find release libs
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
-find_package(Boost 1.80.0 REQUIRED COMPONENTS headers date_time filesystem system log)
+find_package(Boost 1.84.0 REQUIRED COMPONENTS headers log thread chrono)
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
-endif()
+  add_definitions(${Boost_LIB_DIAGNOSTIC_DEFINITIONS})
+ endif()
 
 add_subdirectory(docs)
 #add_subdirectory(tests)
 
 set(PROJECT_HEADERS 
-                    ${CMAKE_SOURCE_DIR}/src/sqlite3.h
-                    ${CMAKE_SOURCE_DIR}/src/sqlite3ext.h)
+                    
+                    )
 
 set(PROJECT_SOURCES ${CMAKE_SOURCE_DIR}/src/main.cpp
-                    ${CMAKE_SOURCE_DIR}/src/sqlite3.c)
+                    )
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 message (STATUS "building using GNU compiler")
@@ -91,20 +94,10 @@ add_compile_definitions(
   $<$<CONFIG:DEBUG>:DEBUG>
 )
 
-add_definitions(-DSQLITE_ENABLE_RTREE)
-add_definitions(-DSQLITE_ENABLE_FTS4)
-add_definitions(-DSQLITE_ENABLE_FTS5)
-add_definitions(-DSQLITE_ENABLE_JSON1)
-add_definitions(-DSQLITE_ENABLE_RBU)
-add_definitions(-DSQLITE_ENABLE_STAT4)
-add_definitions(-DSQLITE_ENABLE_MATH_FUNCTIONS)
-add_definitions(-DSQLITE_ENABLE_DBSTAT_VTAB)
-add_definitions(-DSQLITE_ENABLE_EXPLAIN_COMMENTS)
-
 add_executable(DataPulse ${PROJECT_HEADERS} ${PROJECT_SOURCES})
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    message(STATUS "build using msvc compiler")
+    message(STATUS "Adding compiler definations for build using msvc compiler Windows 10. ")
 target_compile_definitions(DataPulse PUBLIC 
     /permissive- # Specify standards conformance mode to the compiler.
     /W4          # Enable level 4 warnings.
@@ -133,10 +126,11 @@ endif()
 
 target_include_directories(DataPulse PUBLIC
         "${CMAKE_CURRENT_BINARY_DIR}"
-        ${CMAKE_SOURCE_DIR}/src
+        "${CMAKE_SOURCE_DIR}/src"
+        "${CMAKE_SOURCE_DIR}/include"
 )
 
-target_link_libraries(DataPulse PRIVATE
+target_link_libraries(DataPulse PUBLIC
    Boost::headers
    ${Boost_LIBRARIES} 
 )
