@@ -1,4 +1,3 @@
-
 /*!
  * \file main.cpp
  * Author: Felix Muthui Igwanya
@@ -15,7 +14,7 @@
  */
 #include <iostream>
 
-/**
+/*!
  * Entry point to the program.
  *
  * \param argc an integer arg
@@ -25,7 +24,7 @@
  */
 int main(int argc, char **argv)
 {
-    std::cout << "Hello World!" << endl;
+    std::cout << "Hello World!" << std::endl;
 
     return 0;
 }
