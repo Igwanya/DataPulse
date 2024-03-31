@@ -12,22 +12,24 @@
  *  store data and for CRUD operations later.
  *
  */
+
 #include <boost/log/trivial.hpp>
-/*!
- * Entry point to the program.
- *
- * \param argc an integer arg
- * \param argv an array of arg
- *
- * \return The exit status code of exec
- */
-int main(int argc, char **argv)
+ /*!
+  * Entry point to the program.
+  *
+  * \param argc an integer arg
+  * \param argv an array of arg
+  *
+  * \return The exit status code of exec
+  */
+int main(int argc, char** argv)
 {
-    BOOST_LOG_TRIVIAL(trace) << "A trace severity message";
-    BOOST_LOG_TRIVIAL(debug) << "A debug severity message";
-    BOOST_LOG_TRIVIAL(info) << "An informational severity message";
-    BOOST_LOG_TRIVIAL(warning) << "A warning severity message";
-    BOOST_LOG_TRIVIAL(error) << "An error severity message";
-    BOOST_LOG_TRIVIAL(fatal) << "A fatal severity message";
-    return 0;
+
+	BOOST_LOG_TRIVIAL(trace) << "A trace severity message";
+	BOOST_LOG_TRIVIAL(debug) << "A debug severity message";
+	BOOST_LOG_TRIVIAL(info) << "An informational severity message";
+	BOOST_LOG_TRIVIAL(warning) << "A warning severity message";
+	BOOST_LOG_TRIVIAL(error) << "An error severity message";
+	BOOST_LOG_TRIVIAL(fatal) << "A fatal severity message";
+	return 0;
 }
