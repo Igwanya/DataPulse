@@ -56,9 +56,20 @@ if(Boost_FOUND)
     set(MYSQL_CONCPP_RUNTIME_LIBRARY_DIRS "C:/Program Files/MySQL/MySQL/MySQL Connector C++ 8.3/lib64")
     set(mysql-concpp_PLUGIN_DIR "C:/Program Files/MySQL/MySQL/MySQL Connector C++ 8.3/lib64/plugin")
     message(STATUS "found mysql-concpp module config version: ${MYSQL_CONCPP_VERSION}")
-    message(STATUS "mysql runtime dirs: ${MYSQL_CONCPP_RUNTIME_LIBRARY_DIRS}")
+    #message(STATUS "mysql runtime dirs: ${MYSQL_CONCPP_RUNTIME_LIBRARY_DIRS}")
     include_directories("C:/Program Files/MySQL/MySQL/MySQL Connector C++ 8.3/include")
     link_directories("C:/Program Files/MySQL/MySQL/MySQL Connector C++ 8.3/lib64")
+ endif()
+
+ if (WIN32)
+    set(SQLite3_INCLUDE_DIR "C:/Program Files/sqlite/include")
+    set(SQLite3_LIBRARY "C:/Program Files/sqlite/sqlite3.dll")
+ endif()
+ find_package(SQLite3)
+ if (SQLite3_FOUND)
+    include_directories(${SQLite3_INCLUDE_DIRS})
+    message(STATUS "found sqlite3 version: ${SQLite3_VERSION}")
+    link_libraries(${SQLite3_LIBRARIES})
  endif()
 
 add_subdirectory(docs)
@@ -147,5 +158,6 @@ target_link_libraries(DataPulse PUBLIC
    Boost::headers
    ${Boost_LIBRARIES} 
    mysql::concpp
+   SQLite::SQLite3
 )
 
