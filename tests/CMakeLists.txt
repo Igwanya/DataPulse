@@ -20,14 +20,9 @@ set(UNIT_TESTS_SRC_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/tests_db.cpp"
 )
 
-# Build unit tests shared mode
-#add_definitions(-DBOOST_TEST_DYN_LINK)
-
 add_executable(${PROJECT_UNIT_TESTS_NAME} ${UNIT_TESTS_SRC_FILES})
 
 target_include_directories(${PROJECT_UNIT_TESTS_NAME} PRIVATE ${BOOST_INCLUDE_DIRS})
-
-#target_compile_definitions(${PROJECT_UNIT_TESTS_NAME} PRIVATE "BOOST_TEST_DYN_LINK=1")
 
 target_link_libraries(${PROJECT_UNIT_TESTS_NAME} 
 	${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
