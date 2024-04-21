@@ -1,3 +1,9 @@
+cmake_minimum_required(VERSION 3.21.3...3.30)
+message(STATUS "cmake version: ${CMAKE_VERSION}")
+if(${CMAKE_VERSION} VERSION_LESS 3.12)
+    cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
+endif()
+project(Documentation)
 # Require dot, treat the other components as optional
 set(DOXYGEN_PROJECT_BRIEF "String with spaces")
 set(DOXYGEN_GENERATE_TREEVIEW YES) # optional. Also works without treeview

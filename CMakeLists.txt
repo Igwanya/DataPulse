@@ -17,7 +17,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /w44101")
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-
+set(CMAKE_GENERATOR 'NMake Makefiles')
 set(default_build_type "RelWithDebInfo")
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -27,6 +27,11 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   # Set the possible values of build type for cmake-gui
   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
     "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+
+# For debug libs and exes, add "-d" postfix
+if(NOT DEFINED CMAKE_DEBUG_POSTFIX)
+  set(CMAKE_DEBUG_POSTFIX "-d")
 endif()
 
 #set (CMAKE_GENERATOR "Unix Makefiles" CACHE INTERNAL "" FORCE)
@@ -43,7 +48,7 @@ set(Boost_USE_DEBUG_LIBS        ON)  # ignore debug libs and
 set(Boost_USE_RELEASE_LIBS       ON)  # only find release libs
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
-find_package(Boost 1.84.0 REQUIRED COMPONENTS headers log thread chrono)
+find_package(Boost 1.84.0 REQUIRED COMPONENTS headers log thread chrono filesystem system)
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
   add_definitions(${Boost_LIB_DIAGNOSTIC_DEFINITIONS})
@@ -63,7 +68,7 @@ if(Boost_FOUND)
 
  if (WIN32)
     set(SQLite3_INCLUDE_DIR "C:/Program Files/sqlite/include")
-    set(SQLite3_LIBRARY "C:/Program Files/sqlite/sqlite3.dll")
+    set(SQLite3_LIBRARY "C:/Program Files/sqlite/lib/sqlite3.lib")
  endif()
  find_package(SQLite3)
  if (SQLite3_FOUND)
@@ -73,14 +78,16 @@ if(Boost_FOUND)
  endif()
 
 add_subdirectory(docs)
-#add_subdirectory(tests)
+
+add_subdirectory(tests)
 
 set(PROJECT_HEADERS 
                     
-                    )
+)
 
-set(PROJECT_SOURCES ${CMAKE_SOURCE_DIR}/src/main.cpp
-                    )
+set(PROJECT_SOURCES
+    ${CMAKE_SOURCE_DIR}/src/main.cpp
+)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 message (STATUS "building using GNU compiler")
@@ -161,3 +168,8 @@ target_link_libraries(DataPulse PUBLIC
    SQLite::SQLite3
 )
 
+
+# Install 
+# Gather all sources except the main entry point
+file(GLOB_RECURSE INC_FILES ${CMAKE_SOURCE_DIR}src/*/*.hpp)
+file(GLOB_RECURSE SRC_FILES ${CMAKE_SOURCE_DIR}src/*/*.cpp)

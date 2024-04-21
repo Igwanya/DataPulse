@@ -14,7 +14,15 @@
  */
 
 #include <boost/log/trivial.hpp>
+
+int64_t
+factorial(int64_t);
+
+void
+swap(int* x, int* y);
+
  /*!
+ * 
   * Entry point to the program.
   *
   * \param argc an integer arg
@@ -24,12 +32,26 @@
   */
 int main(int argc, char** argv)
 {
+	int x{ 3 };
+	int y{ 5 };
+	swap(&x, &y);
+	BOOST_LOG_TRIVIAL(debug) << factorial(3);
+	BOOST_LOG_TRIVIAL(debug) << "swap_func: x=" << x << " y= " << y;
+	return EXIT_SUCCESS;
+}
 
-	BOOST_LOG_TRIVIAL(trace) << "A trace severity message";
-	BOOST_LOG_TRIVIAL(debug) << "A debug severity message";
-	BOOST_LOG_TRIVIAL(info) << "An informational severity message";
-	BOOST_LOG_TRIVIAL(warning) << "A warning severity message";
-	BOOST_LOG_TRIVIAL(error) << "An error severity message";
-	BOOST_LOG_TRIVIAL(fatal) << "A fatal severity message";
-	return 0;
+int64_t
+factorial(int64_t n)
+{
+	if (n <= 1)
+		return 1;
+	return n * factorial(n - 1); // 6 30
+}
+
+void
+swap(int* x, int* y)
+{
+	int temp = *x;
+	*x = *y;
+	*y = temp;
 }
