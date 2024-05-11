@@ -13,6 +13,8 @@
  *
  */
 
+#include <iostream>
+#include <limits>
 #include <boost/log/trivial.hpp>
 
 int64_t
@@ -32,6 +34,8 @@ swap(int* x, int* y);
   */
 int main(int argc, char** argv)
 {
+	int arg_num{ argc };
+	char** arg_v = { argv };
 	int x{ 3 };
 	int y{ 5 };
 	swap(&x, &y);

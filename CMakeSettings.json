@@ -1,0 +1,39 @@
+﻿{
+  "configurations": [
+    {
+      "name": "x64-Debug",
+      "generator": "Unix Makefiles",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\output\\build\\${name}",
+      "installRoot": "${projectDir}\\output\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": ""
+    },
+    {
+      "name": "Linux-GCC-Debug",
+      "description": "Sets Unix Makefiles generator, compilers, build and install directory, debug build type",
+      "generator": "Unix Makefiles",
+      "configurationType": "RelWithDebInfo",
+      "cmakeExecutable": "cmake",
+      "remoteCopySourcesExclusionList": [ ".vs", ".git", "out" ],
+      "cmakeCommandArgs": "",
+      "buildRoot": "${projectDir}\\output\\build\\${name}",
+      "installRoot": "${projectDir}\\output\\install\\${name}",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "-v",
+      "inheritEnvironments": [ "linux_x64" ],
+      "remoteMachineName": "${defaultRemoteMachineName}",
+      "remoteCopySourcesOutputVerbosity": "Verbose",
+      "remoteCMakeListsRoot": "$HOME/CMakeBuilds/${projectDirName}/${workspaceHash}/src",
+      "remoteBuildRoot": "$HOME/CMakeBuilds/${projectDirName}/${workspaceHash}/output/build/${name}",
+      "remoteInstallRoot": "$HOME/CMakeBuilds/${projectDirName}/${workspaceHash}/output/install/${name}",
+      "remoteCopySources": true,
+      "rsyncCommandArgs": "-t --delete",
+      "remoteCopyBuildOutput": false,
+      "remoteCopySourcesMethod": "rsync",
+      "intelliSenseMode": "linux-gcc-x64"
+    }
+  ]
+}

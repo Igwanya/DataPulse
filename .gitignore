@@ -75,5 +75,6 @@ build
 bak
 todo.txt
 out
-CmakeSettings.json
+output
 .vs
+CMakeSettings.json.bck

@@ -17,7 +17,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /w44101")
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-set(CMAKE_GENERATOR 'NMake Makefiles')
+set(CMAKE_GENERATOR 'Unix Makefiles')
 set(default_build_type "RelWithDebInfo")
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -34,16 +34,10 @@ if(NOT DEFINED CMAKE_DEBUG_POSTFIX)
   set(CMAKE_DEBUG_POSTFIX "-d")
 endif()
 
-#set (CMAKE_GENERATOR "Unix Makefiles" CACHE INTERNAL "" FORCE)
-set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH} C:/Program Files/MySQL/MySQL Server 8.3 C:/Program Files/MySQL/MySQL/MySQL Connector C++ 8.3")
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "C:/Program Files/MySQL/MySQL/MySQL Connector C++ 8.3")
+
 # This creates a config.h in the build directory corresponding to this source directory
 configure_file(config.h.in config.h @ONLY)
 
-set(BOOST_ROOT "C:/Program Files/boost/boost_1_84_0")
-set(BOOST_INCLUDEDIR "C:/Program Files/boost/boost_1_84_0/include")
-set(BOOST_LIBRARYDIR "C:/Program Files/boost/boost_1_84_0/lib")
 set(Boost_USE_DEBUG_LIBS        ON)  # ignore debug libs and
 set(Boost_USE_RELEASE_LIBS       ON)  # only find release libs
 set(Boost_USE_MULTITHREADED      ON)
@@ -52,29 +46,6 @@ find_package(Boost 1.84.0 REQUIRED COMPONENTS headers log thread chrono filesyst
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
   add_definitions(${Boost_LIB_DIAGNOSTIC_DEFINITIONS})
- endif()
-
- set(mysql-concpp_FIND_VERBOSE TRUE)
- find_package(mysql-concpp)
- if (mysql-concpp_FOUND)
-    set(MYSQL_CONCPP_ROOT_DIR "C:/Program Files/MySQL/MySQL/MySQL Connector C++ 8.3")
-    set(MYSQL_CONCPP_RUNTIME_LIBRARY_DIRS "C:/Program Files/MySQL/MySQL/MySQL Connector C++ 8.3/lib64")
-    set(mysql-concpp_PLUGIN_DIR "C:/Program Files/MySQL/MySQL/MySQL Connector C++ 8.3/lib64/plugin")
-    message(STATUS "found mysql-concpp module config version: ${MYSQL_CONCPP_VERSION}")
-    #message(STATUS "mysql runtime dirs: ${MYSQL_CONCPP_RUNTIME_LIBRARY_DIRS}")
-    include_directories("C:/Program Files/MySQL/MySQL/MySQL Connector C++ 8.3/include")
-    link_directories("C:/Program Files/MySQL/MySQL/MySQL Connector C++ 8.3/lib64")
- endif()
-
- if (WIN32)
-    set(SQLite3_INCLUDE_DIR "C:/Program Files/sqlite/include")
-    set(SQLite3_LIBRARY "C:/Program Files/sqlite/lib/sqlite3.lib")
- endif()
- find_package(SQLite3)
- if (SQLite3_FOUND)
-    include_directories(${SQLite3_INCLUDE_DIRS})
-    message(STATUS "found sqlite3 version: ${SQLite3_VERSION}")
-    link_libraries(${SQLite3_LIBRARIES})
  endif()
 
 add_subdirectory(docs)
@@ -164,10 +135,14 @@ target_include_directories(DataPulse PUBLIC
 target_link_libraries(DataPulse PUBLIC
    Boost::headers
    ${Boost_LIBRARIES} 
-   mysql::concpp
-   SQLite::SQLite3
 )
 
+#=======================================================================================================================
+# Output Directories.
+#=======================================================================================================================
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 # Install 
 # Gather all sources except the main entry point
